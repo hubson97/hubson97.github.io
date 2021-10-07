@@ -1,1 +1,26 @@
-test
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PUM task 1</title>
+</head>
+<body>
+
+    <canvas height="600" width="800" id="myCanvas"></canvas>
+    
+    <script>
+        
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "green";
+        ctx.beginPath();
+        ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+            
+
+    </script>
+
+
+
+</body>
+</html>
