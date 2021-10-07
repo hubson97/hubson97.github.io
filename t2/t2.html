@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PUM task 1</title>
+    <title>PUM task 2</title>
 </head>
 <body>
 
@@ -14,20 +14,18 @@
         
         const canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
-        let color = "green";
+        
+        setInterval(changeColor, 20);
 
-        setInterval(changeColor, 1000);
-
-        function changeColorInGradient() {
-            if(color === "green")
-            {
-                color = "blue";
-            }
-            else
-                color = "green";
-
-            ctx.fillStyle = color;
+        function changeColorInGradient() 
+        {   
             ctx.beginPath();
+
+            let gradient = ctx.createLinearGradient(0, 0, 200, 0);
+            gradient.addColorStop(0, 'green');
+            gradient.addColorStop(.7, 'blue');
+            ctx.fillStyle = gradient;
+
             ctx.arc(100, 75, 50, 0, 2 * Math.PI);
             ctx.fill();
             ctx.stroke();
