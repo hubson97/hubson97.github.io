@@ -32,50 +32,62 @@
 
         async function ball()
         {
-            ctx.arc(50, 50, 50, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.fillStyle ="blue";
-    
-
-            let x=50;
-            let y=50;
+        
+            let x = 50;
+            let y = 50;
 
             for(i = 0 ; i < 4; i++)
             {
+                ctx.beginPath();
+                ctx.fillStyle ="blue";
+                ctx.arc(x, y, 48, 0, 2 * Math.PI);
+                ctx.fill();
+                await sleep(45);
+                ctx.beginPath();
+                ctx.fillStyle ="white";
                 ctx.arc(x, y, 50, 0, 2 * Math.PI);
                 ctx.fill();
-                await sleep(100);
+
                 x += i*12;
             }
-            
-            for( i = 0; i<50; i++)
+            x-=2;
+            for( i = 0; i < 50; i++)
             {
+                ctx.beginPath();
+                ctx.fillStyle ="blue";
+                ctx.arc(x, y, 48, 0, 2 * Math.PI);
+                ctx.fill();
+                await sleep(20);
+                ctx.beginPath();
+                ctx.fillStyle ="white";
                 ctx.arc(x, y, 50, 0, 2 * Math.PI);
                 ctx.fill();
-                await sleep(100);
                 y += 10;
                 x += 10;
             }
 
             for(i = 0 ; i < 4; i++)
             {
+                ctx.beginPath();
+                ctx.fillStyle ="blue";
+                ctx.arc(x, y, 48, 0, 2 * Math.PI);
+                ctx.fill();
+                await sleep(20);
+                ctx.beginPath();
+                ctx.fillStyle ="white";
                 ctx.arc(x, y, 50, 0, 2 * Math.PI);
                 ctx.fill();
-                await sleep(100);
                 x += i*12;
             }
-
         }
 
         async function job()
         {
             await steps();    
-            ball();
+            await ball();
         }
     
         job();
-        
-        
         
     </script>
 
