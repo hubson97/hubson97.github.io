@@ -10,9 +10,8 @@
     
     <script>
 
-const canvas = document.getElementById("myCanvas");
-            const ctx = canvas.getContext("2d");
-
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
 
         async function sleep(ms) {
                 return new Promise((resolve) => setTimeout(resolve, ms));
@@ -29,12 +28,54 @@ const canvas = document.getElementById("myCanvas");
                 ctx.fillRect(0+(i*step), 100+(i*step), 100, 600);  
                 await sleep(1000);
             }
+        }
+
+        async function ball()
+        {
+            ctx.arc(50, 50, 50, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle ="blue";
+    
+
+            let x=50;
+            let y=50;
+
+            for(i = 0 ; i < 4; i++)
+            {
+                ctx.arc(x, y, 50, 0, 2 * Math.PI);
+                ctx.fill();
+                await sleep(100);
+                x += i*12;
+            }
+            
+            for( i = 0; i<50; i++)
+            {
+                ctx.arc(x, y, 50, 0, 2 * Math.PI);
+                ctx.fill();
+                await sleep(100);
+                y += 10;
+                x += 10;
+            }
+
+            for(i = 0 ; i < 4; i++)
+            {
+                ctx.arc(x, y, 50, 0, 2 * Math.PI);
+                ctx.fill();
+                await sleep(100);
+                x += i*12;
+            }
 
         }
 
-        steps();
+        async function job()
+        {
+            await steps();    
+            ball();
+        }
+    
+        job();
         
-
+        
         
     </script>
 
