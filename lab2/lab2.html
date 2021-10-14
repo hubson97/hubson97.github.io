@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PUM lab2</title>
+</head>
+<body>
+
+    <canvas height="600" width="800" id="myCanvas"></canvas>
+    
+    
+    <script>
+
+const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+
+
+        async function sleep(ms) {
+                return new Promise((resolve) => setTimeout(resolve, ms));
+            }
+
+        async function steps()
+        {
+            let i=0;
+
+            const step = 100;
+
+            for(i=0;i<5;i++)
+            {
+                ctx.fillRect(0+(i*step), 100+(i*step), 100, 600);  
+                await sleep(1000);
+            }
+
+        }
+
+        steps();
+        
+
+        
+    </script>
+
+
+
+</body>
+</html>
