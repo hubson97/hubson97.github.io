@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PUM lab3</title>
+</head>
+<body>
+
+    <canvas height="600" width="800" id="myCanvas"></canvas>
+    
+    
+    <script>
+        let posX = 400;
+        const posY = 520; 
+        const rectWidth = 80;
+        const rectHeight = 50;
+
+        const canvas = document.getElementById("myCanvas");
+        const context = canvas.getContext("2d");
+
+        canvas.style.background = "#808080";
+
+        const bullets = [];
+
+
+        setInterval(() => {
+
+            drawRectangle();
+
+            bullets.forEach((bullet)=>{
+                bullet.showBullet();
+            })
+
+
+            checkPositions();
+
+        }, 10);
+
+
+        function drawRectangle() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.beginPath();
+            context.rect(posX,posY,rectWidth,rectHeight);
+            context.fillStyle="red";
+            context.fill();
+            context.stroke();
+            context.closePath();
+        }
+
+        drawRectangle();
+
+        window.addEventListener("keydown", keysPressed, false);
+        window.addEventListener("keyup", keysReleased, false);
+        
+        var keys = [];
+        
+        function keysPressed(e) {
+            
+            keys[e.keyCode] = true;
+        
+            // left
+            if (keys[37]) {
+                posX -= 8;
+            }
+        
+            // right
+            if (keys[39]) {
+                posX += 8;
+            }
+            
+            if(keys[32]){
+                bullets.push(new Bullet());
+            }
+        
+            e.preventDefault();
+                    
+        }
+        
+        function keysReleased(e) {
+            keys[e.keyCode] = false;
+        }   
+
+
+        function deleteProjectile(bullet) {
+                const id = bullets.indexOf(bullet);
+                bullets.splice(id, 1);
+                delete projectile;
+            }
+
+        class Bullet{
+            constructor(){
+                this.bulletX = posX + rectWidth / 2;
+                this.bulletY = posY;
+            }
+
+            moveBullet(){
+                this.bulletY -= 5;
+            }
+
+            showBullet(){
+                context.beginPath();
+                this.moveBullet();
+                context.fillStyle="black";
+                context.arc(this.bulletX,this.bulletY, 5,0,2 * Math.PI);
+                context.fill();
+                context.stroke();
+                context.closePath();
+            }
+
+            
+        }
+
+
+
+        
+    </script>
+
+
+
+</body>
+</html>
