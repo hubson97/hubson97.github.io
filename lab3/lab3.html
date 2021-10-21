@@ -20,8 +20,9 @@
         canvas.style.background = "#808080";
 
         const bullets = [];
+        const opponents = [];
 
-
+     
         setInterval(() => {
 
             drawRectangle();
@@ -29,11 +30,17 @@
             bullets.forEach((bullet)=>{
                 bullet.showBullet();
             })
+            opponents.forEach((opponent)=>{
+                opponent.showOpponent();
+            })
 
-
-            checkPositions();
+            collisionsChecking();
 
         }, 10);
+
+        setInterval(() => {
+            addOpponent();
+        }, 2000);
 
 
         function drawRectangle() {
@@ -80,19 +87,54 @@
             keys[e.keyCode] = false;
         }   
 
+        function addOpponent() {
+            opponents.push(new Opponent());
+        }
 
-        function deleteProjectile(bullet) {
-                const id = bullets.indexOf(bullet);
-                bullets.splice(id, 1);
-                delete projectile;
-            }
+        function deleteOpponent(opponent){
+            const id = opponents.indexOf(opponent);
+            opponents.splice(id, 1);
+            delete opponent;
+        }
+
+        function deleteBullet(bullet) {
+            const id = bullets.indexOf(bullet);
+            bullets.splice(id, 1);
+            delete projectile;
+        }
+
+        const isColliding = (opponent, bullet) =>
+                (opponent.getRadius() + bullet.getRadius()) ** 2 >
+                (opponent.getX() - bullet.getX()) ** 2 +
+                    (opponent.getY() - bullet.getY()) ** 2;
+
+        function collisionsChecking(){
+            opponents.forEach((opponent) => {
+                bullets.forEach((bullet) => {
+                    if (isColliding(opponent, bullet)) {
+                        // points++;
+                        deleteOpponent(opponent);
+                        deleteBullet(bullet);
+                    }
+                });
+            });
+        }
+
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
 
         class Bullet{
             constructor(){
                 this.bulletX = posX + rectWidth / 2;
                 this.bulletY = posY;
+                this.radius = 5;
             }
 
+            
             moveBullet(){
                 this.bulletY -= 5;
             }
@@ -101,18 +143,62 @@
                 context.beginPath();
                 this.moveBullet();
                 context.fillStyle="black";
-                context.arc(this.bulletX,this.bulletY, 5,0,2 * Math.PI);
+                context.arc(this.bulletX,this.bulletY, this.radius,0,2 * Math.PI);
                 context.fill();
                 context.stroke();
                 context.closePath();
             }
 
-            
+            getRadius() {
+                return this.radius;
+            }
+
+            getY() {
+                return this.bulletY;
+            }
+
+            getX() {
+                return this.bulletX;
+            }
+
+
         }
 
+        class Opponent{
+            constructor(){
+                this.oppoX = getRandomInt(20, 800);
+                this.oppoY = 25;
+                this.radius = 20;
+            }
 
+            moveOpponent(){
+                this.oppoY +=2;
+            }
 
-        
+            showOpponent(){
+                context.beginPath();
+                this.moveOpponent();
+                context.fillStyle = "green";
+                context.arc(this.oppoX,this.oppoY,20,0,2 * Math.PI);
+                context.fill();
+                context.stroke();
+                context.closePath();
+            }
+
+            getRadius() {
+                return this.radius;
+            }
+
+            getY() {
+                return this.oppoY;
+            }
+
+            getX() {
+                return this.oppoX;
+            }
+
+        }
+
     </script>
 
 
