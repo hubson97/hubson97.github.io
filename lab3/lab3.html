@@ -9,6 +9,8 @@
     
     
     <script>
+        let points = 0;
+
         let posX = 400;
         const posY = 520; 
         const rectWidth = 80;
@@ -33,7 +35,7 @@
             opponents.forEach((opponent)=>{
                 opponent.showOpponent();
             })
-
+            showPoints();
             collisionsChecking();
 
         }, 10);
@@ -55,6 +57,11 @@
         }
 
         drawRectangle();
+
+        function showPoints() {
+            context.font = "55px serif";
+            context.fillText(points, 5, 40);
+        }
 
         window.addEventListener("keydown", keysPressed, false);
         window.addEventListener("keyup", keysReleased, false);
@@ -112,7 +119,7 @@
             opponents.forEach((opponent) => {
                 bullets.forEach((bullet) => {
                     if (isColliding(opponent, bullet)) {
-                        // points++;
+                        points++;
                         deleteOpponent(opponent);
                         deleteBullet(bullet);
                     }
@@ -200,7 +207,6 @@
         }
 
     </script>
-
 
 
 </body>
