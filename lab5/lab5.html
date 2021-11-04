@@ -25,6 +25,8 @@
 
         const bullets = [];
         const opponents = [];
+        const bonuses = [];
+        
      
         setInterval(() => {
 
@@ -46,7 +48,11 @@
 
         setInterval(() => {
             addOpponent(getRandomInt(150,550),0,carWidth,carHeight,3,true);
-        }, 5000);
+        }, 9000);
+
+        setInterval(() => {
+            addBonus(getRandomInt(150,550),0,30,30,3);
+        }, 6500);
 
 
         function drawRectangle() {
@@ -69,12 +75,16 @@
             bullets.forEach((bullet)=>{
                 bullet.showBullet();
             })
+
             
             opponents.forEach((opponent)=>{
                 opponent.showOpponent();
             })
-
             
+            bonuses.forEach((bonus)=>{
+                bonus.showBonus();
+            })
+
             //LP
             context.beginPath();
             context.arc(posX+8,posY+20, 15,0,2 * Math.PI);
@@ -153,11 +163,20 @@
         function addOpponent(objX,objY,objWidth,objHeight,objSpeed,objIsObstacle) {
             opponents.push(new Opponent(objX,objY,objWidth,objHeight,objSpeed,objIsObstacle));
         }
+        function addBonus(objX,objY,objWidth,objHeight,objSpeed,objIsObstacle) {
+            bonuses.push(new Bonus(objX,objY,objWidth,objHeight,objSpeed));
+        }
 
         function deleteOpponent(opponent){
             const id = opponents.indexOf(opponent);
             opponents.splice(id, 1);
             delete opponent;
+        }
+
+        function deleteBonus(bonus){
+            const id = bonuses.indexOf(bonus);
+            bonuses.splice(id, 1);
+            delete bonus;
         }
 
         function deleteBullet(bullet) {
@@ -170,17 +189,16 @@
             opponents.forEach((opponent) => {
                 if(opponent.getIsObstacle())
                 {   
-                    // if(
-                    // posX < opponent.getX() + opponent.width &&
-                    // posX + carWidth > opponent.getX() &&
-                    // posY < opponent.getY() + opponent.height &&
-                    // carHeight + posY > opponent.getY()
-                    // )
-                    // {
-                    //     alert('Przegrałeś!');
-                    //     deleteOpponent(opponent);
-                    //     // location.reload();
-                    // }
+                    if(
+                    posX < opponent.getX() + opponent.width &&
+                    posX + carWidth > opponent.getX() &&
+                    posY < opponent.getY() + opponent.height &&
+                    carHeight + posY > opponent.getY()
+                    )
+                    {
+                        alert('Przegrałeś!');
+                        deleteOpponent(opponent);
+                    }
                     
                     bullets.forEach((bullet)=>{
                         if(
@@ -190,13 +208,26 @@
                             bulletWidth + bullet.getY() > opponent.getY()
                         )
                         {
-                            points++;
                             deleteOpponent(opponent);
                             deleteBullet(bullet);
                         }
                     })
                 }
             });
+
+            bonuses.forEach((bonus)=>{
+                if(
+                    posX < bonus.getX() + bonus.width &&
+                    posX + carWidth > bonus.getX() &&
+                    posY < bonus.getY() + bonus.height &&
+                    carHeight + posY > bonus.getY()
+                    )
+                    {
+                        points++;
+                        deleteBonus(bonus);
+                    }
+            });
+
         }
 
 
@@ -266,7 +297,7 @@
 
             showBonus(){
                 context.beginPath();
-                this.moveOpponent();
+                this.moveBonus();
                 context.fillStyle = "blue";
                 context.rect(this.bonX,this.bonY,this.width,this.height); //17/65
                 context.fill();
