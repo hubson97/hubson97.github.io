@@ -18,6 +18,9 @@
         const bulletWidth = 10;
         const bulletHeight = 10;
 
+        let speedItems = 2;
+
+
         const canvas = document.getElementById("myCanvas");
         const context = canvas.getContext("2d");
 
@@ -38,20 +41,20 @@
         }, 10);
 
         setInterval(() => {
-            addOpponent(350,0,20,65,2,false);
+            addOpponent(350,0,20,65,speedItems,false);
         }, 2000);
 
         setInterval(() => {
-            addOpponent(100,-3,20,50,2,false);
-            addOpponent(600,-3,20,50,2,false);
+            addOpponent(100,-3,20,50,speedItems,false);
+            addOpponent(600,-3,20,50,speedItems,false);
         }, 400);
 
         setInterval(() => {
-            addOpponent(getRandomInt(150,550),0,carWidth,carHeight,3,true);
+            addOpponent(getRandomInt(150,550),0,carWidth,carHeight,speedItems,true);
         }, 9000);
 
         setInterval(() => {
-            addBonus(getRandomInt(150,550),0,30,30,3);
+            addBonus(getRandomInt(150,550),0,30,30,speedItems);
         }, 6500);
 
 
@@ -152,10 +155,28 @@
                 bullets.push(new Bullet());
             }
         
+            //up
+            if(keys[38]){
+                speedUpItems();
+            }
+
+            //down
+            if(keys[40]){
+                speedDownItems();
+            }
+
             e.preventDefault();
                     
         }
         
+        function  speedUpItems(){
+            speedItems += 0.1;
+        }
+        
+        function  speedDownItems(){
+            speedItems -= 0.1;
+        }
+
         function keysReleased(e) {
             keys[e.keyCode] = false;
         }   
@@ -334,7 +355,7 @@
             showBullet(){
                 context.beginPath();
                 this.moveBullet();
-                context.fillStyle="black";
+                context.fillStyle = "black";
                 context.rect(this.bulletX,this.bulletY, bulletWidth,bulletHeight);
                 context.fill();
                 context.stroke();
