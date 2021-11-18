@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PUM lab7</title>
+</head>
+<body>
+
+    <canvas height="600" width="800" id="myCanvas"></canvas>
+    
+    
+    <script>
+        
+
+        let posX = 100;
+        let posY = 363; 
+        const carWidth = 110;
+        const carHeight = 65;
+
+        let speedItems = 2;
+
+        let jumpCounter = 0 ;
+
+        var jumpIntervalVariable = null;
+        var isJumping = false;
+
+        const canvas = document.getElementById("myCanvas");
+        const context = canvas.getContext("2d");
+
+        canvas.style.background = "grey";
+
+        const opponents = [];
+        
+     
+        setInterval(() => {
+
+            drawRectangle();
+
+            collisionsChecking();          
+            
+        }, 10);
+
+        setInterval(() => {
+            if(posY<363 && !isJumping)
+                posY += 4;
+        }, 30);
+
+        setInterval(() => {
+            // addOpponent(100,-3,20,50,speedItems,false);
+            addOpponent(850,450,50,20,speedItems,false);
+        }, 400);
+
+        setInterval(() => {
+            addOpponent(800,385,carHeight,carHeight,speedItems,true); //getRandomInt(150,550)
+        }, 7000);
+
+
+
+        function drawRectangle() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.beginPath();
+            context.rect(0,450,800,20);
+            context.fillStyle="red";
+            context.fill();
+            context.stroke();
+            context.closePath();
+
+            
+            opponents.forEach((opponent)=>{
+                opponent.showOpponent();
+            })
+            
+ 
+            context.beginPath();
+            context.rect(posX,posY,carWidth,carHeight);
+            context.fillStyle="red";
+            context.fill();
+            context.stroke();
+            context.closePath();
+
+            //tyl
+            context.beginPath();
+            context.arc(posX+17,posY+70, 15,0,2 * Math.PI);
+            context.fillStyle="black";
+            context.fill();
+            context.stroke();
+            context.closePath();
+
+            //przod
+            context.beginPath();
+            context.arc(posX+carWidth-20,posY+70, 15,0,2 * Math.PI);
+            context.fillStyle="black";
+            context.fill();
+            context.stroke();
+            context.closePath();
+
+
+
+
+
+        }
+
+        window.addEventListener("keydown", keysPressed, false);
+        window.addEventListener("keyup", keysReleased, false);
+        
+        var keys = [];
+        
+        function keysPressed(e) {
+            
+            keys[e.keyCode] = true;
+        
+            
+            //space
+            if(keys[32]){
+                if(posY == 363 && !isJumping)
+                    jump();
+            }
+        
+            e.preventDefault();
+                    
+        }
+
+
+        function jump(){
+            jumpIntervalVariable = setInterval(() => {
+                isJumping=true;
+                if(jumpCounter == 20){
+                    clearInterval(jumpIntervalVariable);
+                    jumpCounter=0;
+                    isJumping=false;
+                }
+
+                posY -= 8;
+                jumpCounter++;
+
+            }, 30);
+
+            
+        }
+
+        
+        function  speedUpItems(){
+            speedItems += 0.1;
+        }
+        
+        function  speedDownItems(){
+            speedItems -= 0.1;
+        }
+
+        function keysReleased(e) {
+            keys[e.keyCode] = false;
+        }   
+
+        function addOpponent(objX,objY,objWidth,objHeight,objSpeed,objIsObstacle) {
+            opponents.push(new Opponent(objX,objY,objWidth,objHeight,objSpeed,objIsObstacle));
+        }
+        
+
+        function deleteOpponent(opponent){
+            const id = opponents.indexOf(opponent);
+            opponents.splice(id, 1);
+            delete opponent;
+        }
+
+ 
+        function collisionsChecking(){
+            opponents.forEach((opponent) => {
+                if(opponent.getIsObstacle())
+                {   
+                    if(
+                    posX < opponent.getX() + opponent.width &&
+                    posX + carWidth > opponent.getX() &&
+                    posY < opponent.getY() + opponent.height &&
+                    carHeight + posY > opponent.getY()
+                    )
+                    {
+                        alert('Przegrałeś!');
+                        deleteOpponent(opponent);
+                    }
+                    
+                }
+            });
+
+
+
+        }
+
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+
+
+
+        class Opponent{
+            constructor(objX,objY,objWidth,objHeight,objSpeed,objIsObstacle){
+                this.oppoX = objX;//350;//getRandomInt(20, 800);
+                this.oppoY = objY;//25;
+                this.width = objWidth;
+                this.height= objHeight;
+                this.speed = objSpeed;
+                this.isObstacle = objIsObstacle;
+            }
+
+
+            moveOpponent(){
+                this.oppoX -=this.speed;
+            }
+
+            showOpponent(){
+                context.beginPath();
+                this.moveOpponent();
+                context.fillStyle = "white";
+                context.rect(this.oppoX,this.oppoY,this.width,this.height); //17/65
+                context.fill();
+                context.stroke();
+                context.closePath();
+            }
+
+            getIsObstacle(){
+                return this.isObstacle;
+            }
+
+            getY() {
+                return this.oppoY;
+            }
+
+            getX() {
+                return this.oppoX;
+            }
+
+        }
+
+ 
+
+    </script>
+
+
+</body>
+</html>
