@@ -23,45 +23,53 @@
 
         <form>
             <label for="email">Email</label>
-            <input type="email" name="email" placeholder="test@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+            <input type="email" name="email" id="email" placeholder="test@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
             <br>
 
             <label for="zipcode">Zipcode</label>
-            <input type="" name="zipcode" placeholder="00-000" pattern="[0-9]{2}-[0-9]{3}"/>
+            <input type="text" name="zipcode" id="zipcode" placeholder="00-000" pattern="[0-9]{2}-[0-9]{3}"/>
             <br>
             
             <label for="nip">NIP</label>
-            <input type="" name="nip"placeholder="123-456-78-19" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"/>
+            <input type="text" name="nip" id="nip" placeholder="123-456-78-19" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"/>
             <br>
 
             
             <label for="id_card">ID card</label>
-            <input type="" name="id_card" placeholder="ATV345897" pattern="[A-Z]{3}[0-9]{6}"/>
+            <input type="text" name="id_card" id="id_card" placeholder="ATV345897" pattern="[A-Z]{3}[0-9]{6}"/>
             <br>
             
             <label for="ip4">IPv4: </label>
-            <input type="" name="ip4" placeholder="192.168.1.1" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"/>
+            <input type="text" name="ip4" id="ip4" placeholder="192.168.1.1" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"/>
             <br>
             
             <label for="www">WWW address:</label>
-            <input type="url" name="www" placeholder="https://www.google.com/" pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+            <input type="url" name="www" id="www" placeholder="https://www.google.com/" pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
             <br>
             
             <label for="pathOne">Path one </label>
-            <input type="" name="pathOne" placeholder="C:\windows\temp" pattern=""/>
+            <input type="text" id="pathOne" name="pathOne" placeholder="C:\windows\temp" pattern="[a-zA-Z]:\(windows|winnt|win|dos|msdos)(\[0-9a-z]+)?"/>
             <br>
             
             <label for="pathTwo">Path two </label>
-            <input type="" name="pathTwo" placeholder="d:\msdos"/>
+            <input type="text" name="pathTwo" id="pathTwo" placeholder="d:\msdos" pattern="^[a-zA-Z]:\\(?:[a-z0-9]+[\\]?)*$"/>
+            <br>
+
+            <label for="catPath">catalog path </label>
+            <input type="text" name="catPath" id="catPath" placeholder="/etc/passwd" pattern="\(?:[a-z0-9]+[\\]?)*$"/>
             <br>
 
             <label for="ip6">Ipv6: </label>
-            <input type="" name="ip6" placeholder="2001:0db8:85a3:0000:0000:8a2e:0370:7334" pattern="((^|:)([0-9a-fA-F]{0,4})){1,8}$"/>
+            <input type="text" name="ip6" id="ip6"  placeholder="2001:0db8:85a3:0000:0000:8a2e:0370:7334" pattern="((^|:)([0-9a-fA-F]{0,4})){1,8}$"/>
             <br>        
 
             <label for="telephone">Telephone number: </label>
-            <input type="tel" name="telephone" placeholder="123456789" pattern="[1-9][0-9]{8}"/>
+            <input type="tel" name="telephone" id="tel" placeholder="123456789" pattern="[1-9][0-9]{8}"/>
             <br>
+
+
+            <input type="button" value="Generuj dane!" onclick="GetRandomData();" />
+
         </form>
 
 
@@ -69,10 +77,35 @@
 
 
     <script>
+    function GetRandomData() {
+        var rand = getRandomInt(3);
+        const emails = ["texx@gmail.com", "testsaa.com", "tesok@a.com"];
+        const zipCodes = ["1321adsa", "26-200", "90-001"];
+        const nips = ["11-11-11-11", "106-99-00-012", "nsdasda"];
+        const idCards = ["TWE123456", "A56", "1211CC"];
+        const ip4s = ["12.11.33.1", "3.4.6.7", "asdv"];
+        const ip6s = ["1:1:1", "12345", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"];
+        const websites = ["https://www.google.com/", "106-22222-00-062", "aaaaaaaaaaaa"];
+        const pathToCatalogs = ["ABC123456", "ABC56", "1211"];
+        const pathWithLetters = ["C:/sss/", "C:/aaaa", "/aaaaa"];
+        const teleNumbers = ["132456789", "1129999999999999", "333"];
 
+        document.getElementById('email').value = emails[rand];
+        document.getElementById('zipcode').value = zipCodes[rand];
+        document.getElementById('nip').value = nips[rand];
+        document.getElementById('id_card').value = idCards[rand];
+        document.getElementById('ip4').value = ip4s[rand];
+        document.getElementById('ip6').value = ip6s[rand];
+        document.getElementById('www').value = websites[rand];
+        document.getElementById('pathOne').value = pathToCatalogs[rand];
+        document.getElementById('pathTwo').value = pathWithLetters[rand];
+        document.getElementById('catPath').value = pathWithLetters[rand];
+        document.getElementById('tel').value = teleNumbers[rand];
+        }
 
-
-
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+        }
     </script>
 
 
