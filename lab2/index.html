@@ -68,15 +68,19 @@
             <br>
 
             <label for="calendar">Calendar:</label>
-            <input type="date" id="calendar" name="calendar" min="2022-10-17" max="2022-10-21">
+            <input type="date" id="calendar" name="calendar">
             <br>
 
-            <label for="time">Time 24h:</label>
-            <input type="time" id="time" name="time" min="" max="">
+            <label for="limitedCalendar">Calendar:</label>
+            <input type="date" id="limitedCalendar" name="limitedCalendar" min="2022-10-17" max="2022-10-21">
             <br>
 
-            <label for="time">Time 12h:</label>
-            <input type="time" id="time" name="time" min="00:00" max="11:59" >
+            <label for="time24">Time 24h:</label>
+            <input type="time" id="time24" name="time24" min="" max="">
+            <br>
+
+            <label for="time12">Time 12h:</label>
+            <input type="time" id="time12" name="time12" min="00:00" max="11:59" >
             <br>
 
             <label for="color">Color</label>
@@ -85,7 +89,7 @@
             
 
             <br>
-            <input type="button" value="Generuj dane!" onclick="GetRandomData();" />
+            <input type="button" value="Dane losowe" onclick="GetRandomData();" />
 
         </form>
 
@@ -107,6 +111,12 @@
         const pathWithLetters = ["C:/sss/", "C:/aaaa", "/aaaaa"];
         const teleNumbers = ["132456789", "1129999999999999", "333"];
 
+        const calendarDates = ["2022-11-12","2013-04-12","2010-04-22"];
+        const calendarLimitedDates = ["2022-10-17","2022-10-18","2022-10-20"];
+        const time24 = ["17:53","18:12","23:00"];
+        const time12 = ["09:22","01:33","11:11"];
+        const colors = ["#123888","#6036ba","#cd7089"];
+
         document.getElementById('email').value = emails[rand];
         document.getElementById('zipcode').value = zipCodes[rand];
         document.getElementById('nip').value = nips[rand];
@@ -118,6 +128,13 @@
         document.getElementById('pathTwo').value = pathWithLetters[rand];
         document.getElementById('catPath').value = pathWithLetters[rand];
         document.getElementById('tel').value = teleNumbers[rand];
+
+        document.getElementById('calendar').value = calendarDates[rand];
+        document.getElementById('limitedCalendar').value = calendarLimitedDates[rand];
+        document.getElementById('time24').value = time24[rand];
+        document.getElementById('time12').value = time12[rand];
+        document.getElementById('color').value = colors[rand];
+
         }
 
     function getRandomInt(max) {
