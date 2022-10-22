@@ -48,15 +48,15 @@
             <br>
             
             <label for="pathOne">Path one </label>
-            <input type="text" id="pathOne" name="pathOne" placeholder="C:\windows\temp" pattern="[a-zA-Z]:\(windows|winnt|win|dos|msdos)(\[0-9a-z]+)?"/>
+            <input type="text" id="pathOne" name="pathOne" placeholder="C:\windows\temp" pattern="^[a-zA-Z]:\\[a-z\\]*">
             <br>
-            
+
             <label for="pathTwo">Path two </label>
-            <input type="text" name="pathTwo" id="pathTwo" placeholder="d:\msdos" pattern="^[a-zA-Z]:\\(?:[a-z0-9]+[\\]?)*$"/>
+            <input type="text" name="pathTwo" id="pathTwo" placeholder="d:\msdos" pattern="[a-zA-Z]:\\[\\\S|*\S]?.*">
             <br>
 
             <label for="catPath">catalog path </label>
-            <input type="text" name="catPath" id="catPath" placeholder="/etc/passwd" pattern="\(?:[a-z0-9]+[\\]?)*$"/>
+            <input type="text" name="catPath" id="catPath" placeholder="/etc/passwd" pattern="(|((\\|/){1,2}\w+)\$?)((\\|/)(\w[\w ]*.*))">
             <br>
 
             <label for="ip6">Ipv6: </label>
