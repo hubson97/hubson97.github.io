@@ -5,14 +5,29 @@
     <title>lab3</title>
 
     <style>
-        .left {
-            background-color: aqua;
-            width: 30%;
+        .container{
+            height: 800px;
         }
 
-        .right {
+        .container .left {
+            background-color: aqua;
+            background-size: auto;
+            width: 30%;
+            float: left;
+        }
+
+        .container .right {
             background-color: grey;
             width: 70%;
+            float: left;
+        }
+        .container .right .platform{
+            background-color: blue;
+            height: 80%;
+        }
+        .container .right .bottom{
+            background-color: red;
+            height: 20%;
         }
     </style>
 
@@ -23,12 +38,17 @@
     <div class="container">
         <div class="left">
 
-
+            
         </div>
         
         <div class="right">
+            <div class="platform" id="platformID">
+                    
+            </div>
+            <div class="bottom" id="bottomID">
+                <a type="button" id="button" class="button">Create shape</a>
 
-
+            </div>
         </div>
 
     </div>
