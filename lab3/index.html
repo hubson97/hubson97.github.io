@@ -3,92 +3,105 @@
 
 <head>
     <title>lab3</title>
+    <script src="https://unpkg.com/konva@7.2.5/konva.min.js"></script>
+    <meta charset="utf-8" />
 
     <style>
-        .container{
+        .container {
             height: 800px;
             width: 100%;
         }
 
         .container .left {
-            background-color: aqua;
+            /* background-color: aqua; */
             background-size: auto;
             width: 30%;
             float: left;
         }
 
         .container .right {
-            background-color: grey;
+            background-color: aqua;
             width: 70%;
             float: left;
             height: 100%;
         }
-        .container .right .platform{
-            background-color: blue;
+
+        .container .right .platform {
+            /* background-color: blue; */
             height: 80%;
         }
-        .container .right .bottom{
-            background-color: red;
+
+        .container .right .bottom {
+            background-color: #6e6e6ebf;
             height: 20%;
         }
 
         @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
         :root {
-        --border-color: #e3e5e4;
-        --background-color: #6e6e6e;
-        --text-color: #00076d;
-        }
-        * {
-        box-sizing: border-box;
-        }
-        body {
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        height: 50vh;
-        margin: 0;
-        font-family: 'Lato', sans-serif;
-        }
-        .draggable-list {
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
-        padding: 0;
-        list-style-type: none;
-        }
-        .draggable-list li {
-        background-color: #fff;
-        display: flex;
-        flex: 1;
-        }
-        .draggable-list li:not(:last-of-type) {
-        border-bottom: 1px solid var(--border-color);
-        }
-        .draggable-list .number {
-        background-color: var(--background-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        height: auto;
-        width: 30px;
-        }
-        .draggable-list li.over .draggable {
-        background-color: #eaeaea;
-        }
-        .draggable-list .person-name {
-        margin: 0 20px 0 0;
-        }
-        .draggable {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        flex: 1;
+            --border-color: #e3e5e4;
+            --background-color: #6e6e6ebf;
+            --text-color: #003c6d;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(226, 179, 179);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 50vh;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .draggable-list {
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .draggable-list li {
+            background-color: rgb(237, 220, 220);
+            display: flex;
+            flex: 1;
+        }
+
+        .draggable-list li:not(:last-of-type) {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .draggable-list .number {
+            background-color: var(--background-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            height: auto;
+            width: 30px;
+        }
+
+        .draggable-list li.over .draggable {
+            background-color: #c23232;
+        }
+
+        .draggable-list .person-name {
+            margin: 0 20px 0 0;
+        }
+
+        .draggable {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            flex: 1;
+        }
     </style>
 
 </head>
@@ -98,7 +111,7 @@
     <div class="container">
         <div class="left">
             <div class="center">
-                <h1>Edytowalna lista</h1>
+                <h1>List edytowalna</h1>
                 <ul class="draggable-list" id="draggable-list"></ul>
             </div>
             <script>
@@ -108,78 +121,121 @@
                 const listItems = [];
                 let dragStartIndex;
                 createList();
-                function createList(){
-                [...listOfElements]
-                    .map(a => ({value: a, sort: Math.random()}))
-                    .sort((a, b) => a.sort - b.sort)
-                    .map(a => a.value)
-                    .forEach((element, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.setAttribute('data-index', index);
-                    listItem.innerHTML = `
+                function createList() {
+                    [...listOfElements]
+                        .map(a => ({ value: a, sort: Math.random() }))
+                        .sort((a, b) => a.sort - b.sort)
+                        .map(a => a.value)
+                        .forEach((element, index) => {
+                            const listItem = document.createElement('li');
+                            listItem.setAttribute('data-index', index);
+                            listItem.innerHTML = `
                         <span class="number">${index + 1}</span>
                         <div class="draggable" draggable="true">
                         <p class="element-name" contenteditable="true">${element}</p>
                         </div>`;
-                    listItems.push(listItem);
-                    draggable_list.appendChild(listItem);
-                    });
-                addEventListeners();
+                            listItems.push(listItem);
+                            draggable_list.appendChild(listItem);
+                        });
+                    addEventListeners();
                 }
                 function swapItems(fromIndex, toIndex) {
-                const itemOne = listItems[fromIndex].querySelector('.draggable');
-                const itemTwo = listItems[toIndex].querySelector('.draggable');
-                listItems[fromIndex].appendChild(itemTwo);
-                listItems[toIndex].appendChild(itemOne);
+                    const itemOne = listItems[fromIndex].querySelector('.draggable');
+                    const itemTwo = listItems[toIndex].querySelector('.draggable');
+                    listItems[fromIndex].appendChild(itemTwo);
+                    listItems[toIndex].appendChild(itemOne);
                 }
-        
+
                 function addEventListeners() {
-                const draggables = document.querySelectorAll('.draggable');
-                const dragListItems = document.querySelectorAll('.draggable-list li');
-        
-                draggables.forEach(draggable => {
-                    draggable.addEventListener('dragstart', dragStart);
-                });
-        
-                dragListItems.forEach(item => {
-                    item.addEventListener('dragover', dragOver);
-                    item.addEventListener('drop', dragDrop);
-                    item.addEventListener('dragenter', dragEnter);
-                    item.addEventListener('dragleave', dragLeave);
-                });
+                    const draggables = document.querySelectorAll('.draggable');
+                    const dragListItems = document.querySelectorAll('.draggable-list li');
+
+                    draggables.forEach(draggable => {
+                        draggable.addEventListener('dragstart', dragStart);
+                    });
+
+                    dragListItems.forEach(item => {
+                        item.addEventListener('dragover', dragOver);
+                        item.addEventListener('drop', dragDrop);
+                        item.addEventListener('dragenter', dragEnter);
+                        item.addEventListener('dragleave', dragLeave);
+                    });
                 }
-        
+
                 function dragStart() {
-                dragStartIndex = +this.closest('li').getAttribute('data-index');
+                    dragStartIndex = +this.closest('li').getAttribute('data-index');
                 }
-        
+
                 function dragEnter() {
-                this.classList.add('over');
+                    this.classList.add('over');
                 }
-        
+
                 function dragLeave() {
-                this.classList.remove('over');
+                    this.classList.remove('over');
                 }
-        
+
                 function dragOver(e) {
-                e.preventDefault();
+                    e.preventDefault();
                 }
-        
+
                 function dragDrop() {
-                const dragEndIndex = +this.getAttribute('data-index');
-                swapItems(dragStartIndex, dragEndIndex);
-                this.classList.remove('over');
+                    const dragEndIndex = +this.getAttribute('data-index');
+                    swapItems(dragStartIndex, dragEndIndex);
+                    this.classList.remove('over');
                 }
-            </script>   
+            </script>
         </div>
-        
-        <div class="right">
+
+        <div class="right" id="right">
             <div class="platform" id="platformID">
-                    PLATFORM
+                PLATFORM
             </div>
             <div class="bottom" id="bottomID">
-                <!-- <a type="button" id="button" class="button">Create shape</a> -->
-                <button>test</button>
+                <button id="generateBtn">Generuj klocek</button>
+
+                <script>
+                    var width = document.getElementById("platformID").offsetWidth; 
+                    var height = document.getElementById("platformID").offsetHeight;
+
+                    var stage = new Konva.Stage({
+                        container: 'platformID',
+                        width: width,
+                        height: height,
+                        margin: 0,
+                    });
+
+                    var layer = new Konva.Layer();
+                    var rectX = stage.width() / 2 - 50;
+                    var rectY = stage.height() / 2 - 25;
+
+                    var box = new Konva.Rect();
+
+                    var layer = new Konva.Layer();
+                    stage.add(layer);
+
+                    var tr = new Konva.Transformer();
+                    layer.add(tr);
+                    layer.draw();
+                    layer.add(box);
+
+                    document.getElementById('generateBtn').addEventListener('click', addShape);
+
+
+                    function addShape() {
+                        layer.add(
+                            new Konva.Rect({
+                                x: Math.random() * 10,
+                                y: Math.random() * 10,
+                                width: 200,
+                                height: 200,
+                                fill: Konva.Util.getRandomColor(),
+                                draggable: true,
+                            })
+                        );
+                        tr.forceUpdate();
+                        layer.draw();
+                    }
+                </script>
             </div>
         </div>
 
