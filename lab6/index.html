@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Customer Manager</title>
+
+  <link href="style/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <label>Menu:</label>
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="index.html"><span data-feather="users"></span> Customers</a></li>
+          <li><a href="add.html"><span data-feather="users"></span> Add Customer</a></li>
+          <li><a onclick="clearCustomers()" class="danger" href="#"><span data-feather="trash"></span> Delete
+              customers</a></li>
+        </ul>
+        <br><br>
+        <label>Wyszukiwanie:</label>
+        <input type="text" id="myInput" onkeyup="searchTable()" class="form-control" placeholder="Search...">
+      </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Customers</h1>
+        <div class="table-responsive">
+          <table class="table table-striped" id="customersTable">
+            <thead>
+              <tr id='tableHeader'>
+                <th>Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Nip Number</th>
+                <th>Zip Code</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>ID Card</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="customers">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>
